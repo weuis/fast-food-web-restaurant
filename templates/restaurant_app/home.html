@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Overview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Restaurant Overview</h1>
+
+    <h2>Positions</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        {% for position in positions %}
+        <tr>
+            <td>{{ position.position_name }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td>No positions available</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Position List</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Chef</th>
+        </tr>
+        {% for item in position_list %}
+        <tr>
+            <td>{{ item.position_name }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.category.position_name }}</td>
+            <td>{{ item.chef }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No position list available</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Customer Feedback</h2>
+    <ul>
+        {% for feedback in review %}
+        <li><strong>{{ feedback.user_name }}</strong>: "{{ feedback.description }}" (Rating: {{ feedback.rating }})</li>
+        {% empty %}
+        <li>No feedback available</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
