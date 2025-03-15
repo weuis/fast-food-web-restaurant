@@ -2,7 +2,15 @@ from django.shortcuts import render
 
 from django.http import HttpRequest, HttpResponse
 
-from .models import Position, PositionList, Feedback
+from .models import (
+    Position,
+    PositionList,
+    Feedback,
+    Chef,
+    AboutUs,
+    BookTable,
+    Feedback
+)
 
 def home(request: HttpRequest) -> HttpResponse:
     positions = Position.objects.all()
@@ -19,4 +27,11 @@ def home(request: HttpRequest) -> HttpResponse:
         'restaurant_app/home.html',
         context=context
     )
+
+def about(request: HttpRequest) -> HttpResponse:
+    data = AboutUs.objects.all()
+    context = {
+        'data': data
+    }
+    return render(request, 'restaurant_app/about.html', context=context)
 
