@@ -1,41 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Overview</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f8f8f8;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        p {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>About Our Restaurant</h1>
-        {% for item in data %}
-            <p>{{ item.description }}</p>
-        {% endfor %}
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}About Us - Restaurant{% endblock %}
+
+{% block content %}
+    <h1>About Our Restaurant</h1>
+    {% for item in data %}
+        <p>{{ item.description }}</p>
+    {% empty %}
+        <p>No information available.</p>
+    {% endfor %}
+{% endblock %}
