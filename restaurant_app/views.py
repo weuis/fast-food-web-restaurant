@@ -35,3 +35,15 @@ def about(request: HttpRequest) -> HttpResponse:
     }
     return render(request, 'restaurant_app/about.html', context=context)
 
+
+def menu(request):
+    positions = Position.objects.all()
+    menu_items = PositionList.objects.all()
+
+    context = {
+        'positions': positions,
+        'menu_items': menu_items,
+    }
+
+    return render(request, 'restaurant_app/menu.html', context)
+

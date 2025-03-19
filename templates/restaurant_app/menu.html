@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu - Restaurant{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Our Menu</h1>
+    
+    {% for position in positions %}
+        <h2>{{ position.position_name }}</h2>
+        <ul>
+            {% for item in menu_items %}
+                {% if item.category == position %}
+                    <li>
+                        <strong>{{ item.position_name }}</strong> - ${{ item.price }}<br>
+                        <em>{{ item.description }}</em>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</div>
+{% endblock %}
