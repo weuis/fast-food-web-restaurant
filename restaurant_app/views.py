@@ -12,7 +12,7 @@ from .models import (
     Feedback
 )
 
-def home(request: HttpRequest) -> HttpResponse:
+def home_view(request: HttpRequest) -> HttpResponse:
     positions = Position.objects.all()
     position_list = PositionList.objects.all()
     review = Feedback.objects.all()
@@ -28,7 +28,7 @@ def home(request: HttpRequest) -> HttpResponse:
         context=context
     )
 
-def about(request: HttpRequest) -> HttpResponse:
+def about_view(request: HttpRequest) -> HttpResponse:
     data = AboutUs.objects.all()
     context = {
         'data': data
@@ -36,7 +36,7 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, 'restaurant_app/about.html', context=context)
 
 
-def menu(request):
+def menu_view(request: HttpRequest) -> HttpResponse:
     positions = Position.objects.all()
     menu_items = PositionList.objects.all()
 
@@ -45,5 +45,36 @@ def menu(request):
         'menu_items': menu_items,
     }
 
-    return render(request, 'restaurant_app/menu.html', context)
+    return render(request, 'restaurant_app/menu.html', context=context)
 
+def book_table_view(request: HttpRequest) -> HttpResponse:
+    context = {}
+
+    if request.method == 'POST':
+        name = request.POST.get('user_name', '').strip()
+        phone_number = request.POST.get('phone_number', '').strip()
+        email = request.POST.get('user_email', '').strip()
+        total_person = request.POST.get('total_person', '').strip()
+        booking_data = request.POST.get('booking_data', '').strip()
+        try:
+            total_person = int(total_person)
+        except ValueError:
+            total_person = 0
+
+        if name and len(phone_number) == 10 and email and total_person > 0 and booking_data:
+            data = BookTable(Name=name, Phone_number=phone_number,
+                             Email=email, Total_person=total_person,
+                             Booking_date=booking_data)
+            data.save()
+            context['message'] = "Booking successful!"
+        else:
+            context['error'] = "Invalid input. Please check your details."
+        context.update({
+            'user_name': name,
+            'phone_number': phone_number,
+            'user_email': email,
+            'total_person': total_person,
+            'booking_data': booking_data,
+        })
+
+    return render(request, 'restaurant_app/book_table.html', context=context)
