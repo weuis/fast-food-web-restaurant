@@ -3,38 +3,38 @@
 {% block title %}Feedback - Restaurant{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Give Your Feedback</h2>
+<div class="container" style="max-width: 600px; margin: auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center; font-size: 28px; margin-bottom: 20px;">Give Your Feedback</h2>
 
     {% if message %}
-        <p style="color: green;">{{ message }}</p>
+        <p style="color: green; font-size: 18px; text-align: center;">{{ message }}</p>
     {% elif error %}
-        <p style="color: red;">{{ error }}</p>
+        <p style="color: red; font-size: 18px; text-align: center;">{{ error }}</p>
     {% endif %}
 
-<form method="POST" action="{% url 'restaurant_app:feedback' %}">
-    {% csrf_token %}
-    
-    <label for="user_name">Name:</label>
-    <input type="text" id="user_name" name="user_name" required>
+    <form method="POST" action="{% url 'restaurant_app:feedback' %}" style="display: flex; flex-direction: column; gap: 15px;">
+        {% csrf_token %}
+        
+        <label for="user_name" style="font-size: 18px; font-weight: bold;">Name:</label>
+        <input type="text" id="user_name" name="user_name" required style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        
+        <label for="description" style="font-size: 18px; font-weight: bold;">Feedback:</label>
+        <textarea id="description" name="description" required style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; height: 100px;"></textarea>
+        
+        <label for="rating" style="font-size: 18px; font-weight: bold;">Rating (1-5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+        
+        <button type="submit" style="padding: 12px; font-size: 18px; font-weight: bold; color: white; background: #007bff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s;">Submit Feedback</button>
+    </form>
 
-    <label for="description">Feedback:</label>
-    <textarea id="description" name="description" required></textarea>
-
-    <label for="rating">Rating (1-5):</label>
-    <input type="number" id="rating" name="rating" min="1" max="5" required>
-
-    <button type="submit">Submit Feedback</button>
-</form>
-
-    <h3>Customer Feedback</h3>
+    <h3 style="text-align: center; font-size: 24px; margin-top: 30px;">Customer Feedback</h3>
     {% for feedback in feedback_list %}
-        <div class="feedback-box">
+        <div class="feedback-box" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
             <p><strong>{{ feedback.user_name }}</strong> (Rating: {{ feedback.rating }}/5)</p>
             <p>{{ feedback.description }}</p>
         </div>
     {% empty %}
-        <p>No feedback yet. Be the first to share your thoughts!</p>
+        <p style="text-align: center; font-size: 16px;">No feedback yet. Be the first to share your thoughts!</p>
     {% endfor %}
 </div>
 {% endblock %}
