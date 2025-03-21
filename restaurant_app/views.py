@@ -12,14 +12,29 @@ from .models import (
 )
 
 def home_view(request: HttpRequest) -> HttpResponse:
-    positions = Position.objects.all()
-    position_list = PositionList.objects.all()
-    review = Feedback.objects.all()
+    positions = Position.objects.all().order_by('position_name')
+
+    reviews = Feedback.objects.all().order_by('-id')[:5]
+
+    category_id = request.GET.get('category_id')
+    sort_order = request.GET.get('sort', 'asc')
+
+    if category_id:
+        position_list = PositionList.objects.filter(category_id=category_id)
+    else:
+        position_list = PositionList.objects.all()
+
+    if sort_order == 'desc':
+        position_list = position_list.order_by('-price')
+    else:
+        position_list = position_list.order_by('price')
 
     context = {
         'positions': positions,
         'position_list': position_list,
-        'review': review
+        'reviews': reviews,
+        'selected_category': category_id,
+        'selected_sort': sort_order
     }
     return render(
         request,
@@ -62,7 +77,7 @@ def book_table_view(request: HttpRequest) -> HttpResponse:
         except ValueError:
             total_person = 0
 
-        if name and len(phone_number) == 10 and email and total_person > 0 and booking_data:
+        if total_person > 0 and booking_data:
             data = BookTable(name=name, phone_number=phone_number,
                              email=email, total_person=total_person,
                              booking_date=booking_data)

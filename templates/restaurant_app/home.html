@@ -3,54 +3,67 @@
 {% block title %}Home - Restaurant Overview{% endblock %}
 
 {% block content %}
-    <h1>Restaurant Overview</h1>
+<div class="container" style="max-width: 900px; margin: auto; padding: 20px;">
+    <h1 style="text-align: center; font-size: 32px; margin-bottom: 20px;">Restaurant Overview</h1>
 
-    <h2>Positions</h2>
-    <table>
-        <tr>
-            <th>Name</th>
+    <form method="GET" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+        <label for="category_id" style="font-size: 18px; font-weight: bold;">Filter by Category:</label>
+        <select name="category_id" id="category_id" style="padding: 8px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="">All Categories</option>
+            {% for position in positions %}
+                <option value="{{ position.id }}" {% if position.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                    {{ position.position_name }}
+                </option>
+            {% endfor %}
+        </select>
+    
+        <label for="sort" style="font-size: 18px; font-weight: bold;">Sort by Price:</label>
+        <select name="sort" id="sort" style="padding: 8px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="asc" {% if selected_sort == "asc" %}selected{% endif %}>Low to High</option>
+            <option value="desc" {% if selected_sort == "desc" %}selected{% endif %}>High to Low</option>
+        </select>
+
+        <button type="submit" style="padding: 8px 15px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Apply</button>
+    </form>
+
+    <h2 style="font-size: 26px; margin-top: 20px;">Positions</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr style="background: #28a745; color: white; font-size: 18px;">
+            <th style="padding: 10px; text-align: left;">Name</th>
         </tr>
         {% for position in positions %}
-        <tr>
-            <td>{{ position.position_name }}</td>
+        <tr style="border-bottom: 1px solid #ddd; font-size: 16px;">
+            <td style="padding: 10px;">{{ position.position_name }}</td>
         </tr>
         {% empty %}
         <tr>
-            <td>No positions available</td>
+            <td style="padding: 10px; text-align: center; font-style: italic;">No positions available</td>
         </tr>
         {% endfor %}
     </table>
 
-    <h2>Position List</h2>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Chef</th>
+    <h2 style="font-size: 26px; margin-top: 30px;">Position List</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr style="background: #007bff; color: white; font-size: 18px;">
+            <th style="padding: 10px; text-align: left;">Name</th>
+            <th style="padding: 10px; text-align: left;">Description</th>
+            <th style="padding: 10px; text-align: left;">Price</th>
+            <th style="padding: 10px; text-align: left;">Category</th>
+            <th style="padding: 10px; text-align: left;">Chef</th>
         </tr>
         {% for item in position_list %}
-        <tr>
-            <td>{{ item.position_name }}</td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.category.position_name }}</td>
-            <td>{{ item.chef }}</td>
+        <tr style="border-bottom: 1px solid #ddd; font-size: 16px;">
+            <td style="padding: 10px;">{{ item.position_name }}</td>
+            <td style="padding: 10px;">{{ item.description }}</td>
+            <td style="padding: 10px;">${{ item.price }}</td>
+            <td style="padding: 10px;">{{ item.category.position_name }}</td>
+            <td style="padding: 10px;">{{ item.chef }}</td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5">No position list available</td>
+            <td colspan="5" style="padding: 10px; text-align: center; font-style: italic;">No position list available</td>
         </tr>
         {% endfor %}
     </table>
-
-    <h2>Customer Feedback</h2>
-    <ul>
-        {% for feedback in review %}
-        <li><strong>{{ feedback.user_name }}</strong>: "{{ feedback.description }}" (Rating: {{ feedback.rating }})</li>
-        {% empty %}
-        <li>No feedback available</li>
-        {% endfor %}
-    </ul>
+</div>
 {% endblock %}
