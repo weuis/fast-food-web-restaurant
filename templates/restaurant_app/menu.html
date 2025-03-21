@@ -4,20 +4,83 @@
 
 {% block content %}
 <div class="container">
-    <h1>Our Menu</h1>
+    <h1 class="menu-title">Our Menu</h1>
     
-    {% for position in positions %}
-        <h2>{{ position.position_name }}</h2>
-        <ul>
-            {% for item in menu_items %}
-                {% if item.category == position %}
-                    <li>
-                        <strong>{{ item.position_name }}</strong> - ${{ item.price }}<br>
-                        <em>{{ item.description }}</em>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endfor %}
+    <div class="menu-categories">
+        <span class="category-label">Categories:</span>
+        {% for position in positions %}
+            <span class="category-item">{{ position.position_name }}</span>
+        {% endfor %}
+    </div>
+    
+    <div class="menu-grid">
+        {% for item in menu_items %}
+        <div class="menu-item">
+            <div class="menu-image">
+                <img src="{{ item.image_url }}" alt="{{ item.position_name }}">
+            </div>
+            <div class="menu-details">
+                <h3>{{ item.position_name }}</h3>
+                <p>{{ item.description }}</p>
+                <div class="menu-footer">
+                    <span class="menu-price">${{ item.price }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+    }
+    .menu-title {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    .menu-categories {
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+    .category-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    .category-item {
+        display: inline-block;
+        background: #333;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        margin: 5px;
+    }
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    .menu-item {
+        background: white;
+        border-radius: 10px;{% comment %}{% endcomment %}
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        overflow: hidden;
+        text-align: left;
+    }
+    .menu-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    .menu-details {
+        padding: 15px;
+    }
+    .menu-footer {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+</style>
 {% endblock %}

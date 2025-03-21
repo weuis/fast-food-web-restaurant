@@ -18,6 +18,8 @@ urlpatterns = [
     path("feedback/", feedback_view, name="feedback"),
 
 
+
+
 ]
 
 app_name= "restaurant_app"
