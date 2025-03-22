@@ -7,11 +7,13 @@ class PositionAdmin(admin.ModelAdmin):
     list_display = ("id", "position_name")
     search_fields = ("position_name",)
 
+
 @admin.register(PositionList)
 class PositionListAdmin(admin.ModelAdmin):
     list_display = ("id", "position_name", "price", "category", "chef")
     search_fields = ("position_name", "category__position_name", "chef__username")
     list_filter = ("category", "chef")
+
 
 @admin.register(Chef)
 class ChefAdmin(admin.ModelAdmin):
@@ -19,9 +21,14 @@ class ChefAdmin(admin.ModelAdmin):
     search_fields = ("username", "email")
     list_filter = ("is_chef",)
 
+
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
-    list_display = ("id", "description",)
+    list_display = (
+        "id",
+        "description",
+    )
+
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
@@ -29,8 +36,16 @@ class FeedbackAdmin(admin.ModelAdmin):
     search_fields = ("user_name",)
     list_filter = ("rating",)
 
+
 @admin.register(BookTable)
 class BookTableAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "phone_number", "email", "total_person", "booking_date")
+    list_display = (
+        "id",
+        "name",
+        "phone_number",
+        "email",
+        "total_person",
+        "booking_date",
+    )
     search_fields = ("name", "email", "phone_number")
     list_filter = ("booking_date", "total_person")
