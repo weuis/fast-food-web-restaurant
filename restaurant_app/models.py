@@ -13,8 +13,10 @@ class PositionList(models.Model):
     position_name = models.CharField(max_length=40)
     description = models.TextField(blank=False)
     price = models.IntegerField()
-    category = models.ForeignKey(Position, related_name='name', on_delete=models.CASCADE)
-    chef = models.ForeignKey('Chef', related_name='positions', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Position, related_name="name", on_delete=models.CASCADE
+    )
+    chef = models.ForeignKey("Chef", related_name="positions", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.position_name
