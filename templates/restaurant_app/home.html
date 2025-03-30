@@ -62,7 +62,9 @@
             <td>{{ item.description }}</td>
             <td style="text-align: right;">${{ item.price }}</td>
             <td>{{ item.category.position_name }}</td>
-            <td>{{ item.chef }}</td>
+            <td style="display: {% if not item.chef %} none {% else %} table-cell {% endif %};">
+                {{ item.chef }}
+            </td>
         </tr>
         {% empty %}
         <tr>

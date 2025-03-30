@@ -16,7 +16,13 @@ class PositionList(models.Model):
     category = models.ForeignKey(
         Position, related_name="name", on_delete=models.CASCADE
     )
-    chef = models.ForeignKey("Chef", related_name="positions", on_delete=models.CASCADE)
+    chef = models.ForeignKey(
+        "Chef",
+        related_name="positions",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.position_name
