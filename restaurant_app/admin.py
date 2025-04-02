@@ -10,7 +10,7 @@ class PositionAdmin(admin.ModelAdmin):
 
 @admin.register(PositionList)
 class PositionListAdmin(admin.ModelAdmin):
-    list_display = ("id", "position_name", "price", "category", "chef")
+    list_display = ("id", "position_name", "price", "category", "chef", "image")
     search_fields = ("position_name", "category__position_name", "chef__username")
     list_filter = ("category", "chef")
 
