@@ -6,21 +6,29 @@
 
 {% block content %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+
 <div class="container">
     <h1 class="menu-title">Our Menu</h1>
-    
+
     <div class="menu-categories">
         <span class="category-label">Categories:</span>
+        <span class="category-item active" data-category="all" onclick="filterMenu('all')">All</span>
         {% for position in positions %}
-            <span class="category-item">{{ position.position_name }}</span>
+            <span class="category-item" data-category="{{ position.position_name|slugify }}" onclick="filterMenu('{{ position.position_name|slugify }}')">
+                {{ position.position_name }}
+            </span>
         {% endfor %}
     </div>
-    
+
     <div class="menu-grid">
         {% for item in menu_items %}
-        <div class="menu-item">
+        <div class="menu-item" data-category="{{ item.position_name|slugify }}">
             <div class="menu-image">
-                <img src="{{ item.image_url }}" alt="{{ item.position_name }}">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.position_name }}">
+                {% else %}
+                    <img src="{% static 'images/default-image.jpg' %}" alt="No image available">
+                {% endif %}
             </div>
             <div class="menu-details">
                 <h3>{{ item.position_name }}</h3>
