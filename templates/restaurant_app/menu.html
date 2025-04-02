@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}Menu - Restaurant{% endblock %}
 
 {% block content %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
 
 <div class="container">
     <h1 class="menu-title">Our Menu</h1>
+    <label>
+        <input
+            type="text"
+            class="search-bar"
+            placeholder="Search by name..."
+            id="search-input"
+        >
+    </label>
+    <form id="menu-filter-form">
+        <div class="menu-categories">
+            <span class="category-label">Categories:</span>
+            <input type="radio" id="all" name="category_id" value="" {% if not selected_category %}checked{% endif %}>
+            <label for="all">All</label>
 
-    <div class="menu-categories">
-        <span class="category-label">Categories:</span>
-        <span class="category-item active" data-category="all" onclick="filterMenu('all')">All</span>
-        {% for position in positions %}
-            <span class="category-item" data-category="{{ position.position_name|slugify }}" onclick="filterMenu('{{ position.position_name|slugify }}')">
-                {{ position.position_name }}
-            </span>
-        {% endfor %}
-    </div>
+            {% for position in positions %}
+                <input type="radio" id="{{ position.position_name|slugify }}" name="category_id" value="{{ position.id }}" {% if selected_category == position.id|stringformat:"s" %}checked{% endif %}>
+                <label for="{{ position.position_name|slugify }}">{{ position.position_name }}</label>
+            {% endfor %}
+        </div>
+    </form>
 
-    <div class="menu-grid">
+    <div class="menu-grid" id="menu-grid">
         {% for item in menu_items %}
-        <div class="menu-item" data-category="{{ item.position_name|slugify }}">
+        <div class="menu-item" data-category="{{ item.position_name|slugify }}" data-name="{{ item.position_name|lower }}">
             <div class="menu-image">
                 {% if item.image %}
                     <img src="{{ item.image.url }}" alt="{{ item.position_name }}">
@@ -41,4 +50,21 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+    document.getElementById('search-input').addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+        let menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(function(item) {
+            let itemName = item.getAttribute('data-name');
+
+            if (itemName.includes(searchValue)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}
