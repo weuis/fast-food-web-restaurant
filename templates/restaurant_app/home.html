@@ -2,92 +2,81 @@
 
 {% load static %}
 
-{% block title %}Home - Restaurant Overview{% endblock %}
+{% block title %}Mono Food - Home{% endblock %}
 
 {% block content %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-<div class="container">
-    <h1 style="text-align: center; font-size: 32px; margin-bottom: 20px; color: #333;">Restaurant Overview</h1>
+    <header class="hero bg-dark text-light text-center py-5">
+        <div class="hero-content">
+            <h1 class="display-4">Mono Food</h1>
+            <p class="lead">A good place to eat. The best place to feel.</p>
+            <a href="{% url 'restaurant_app:menu' %}" class="btn btn-warning btn-lg">Explore Menu</a>
+        </div>
+    </header>
 
-  <label>
-    <input type="text" class="search-bar" placeholder="Search positions..." onkeyup="filterTable()">
-  </label>
+    <section class="about py-5 text-center">
+        <div class="container">
+            <h2 class="display-4 text-primary">Welcome to Mono Food</h2>
+            <p class="lead mb-4">Discover a variety of dishes and enjoy a cozy atmosphere. Our chefs bring passion and creativity to every meal.</p>
+            <a href="{% url 'restaurant_app:about' %}" class="btn btn-outline-primary btn-lg">Learn More</a>
+        </div>
+    </section>
 
-  <form method="GET" style="display: flex; gap: 10px; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-        <label for="category_id" style="font-size: 18px; font-weight: bold;">Filter by Category:</label>
-        <select name="category_id" id="category_id" class="filter" style="padding: 8px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="">All Categories</option>
-            {% for position in positions %}
-                <option value="{{ position.id }}" {% if position.id|stringformat:"s" == selected_category %}selected{% endif %}>
-                    {{ position.position_name }}
-                </option>
-            {% endfor %}
-        </select>
+    <section class="features py-5 bg-light">
+        <div class="container">
+            <h2 class="display-4 text-center text-primary mb-4">Our Features</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Book a Table</h5>
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <p class="card-text">Reserve your spot easily through our online booking system.</p>
+                            <a href="{% url 'restaurant_app:book_table' %}" class="btn btn-success">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-lg">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Share Your Experience</h5>
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <p class="card-text">Leave feedback and let us know how we can improve.</p>
+                            <a href="{% url 'restaurant_app:feedback' %}" class="btn btn-warning">Give Feedback</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <label for="sort" style="font-size: 18px; font-weight: bold;">Sort by Price:</label>
-        <select name="sort" id="sort" class="filter" style="padding: 8px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="asc">Low to High</option>
-            <option value="desc">High to Low</option>
-        </select>
-    </form>
+    <section class="contact py-5">
+        <div class="container text-center">
+            <h2 class="display-4 text-primary mb-4">Contact Us</h2>
+            <div class="contact-info mb-4">
+                <p>📍 Address: 56 Maidan Heroes Square, Dnipro, Ukraine</p>
+                <p>📞 Phone: +380 (56) 123-45-67</p>
+                <p>✉️ Email: contact@monofood.com</p>
+            </div>
 
-    <h2 style="font-size: 26px; margin-top: 20px; color: #333;">Positions</h2>
-    <table id="positionsTable">
-        <tr>
-            <th>Name</th>
-        </tr>
-        {% for position in positions %}
-        <tr>
-            <td>{{ position.position_name }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td style="text-align: center; font-style: italic;">No positions available</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h2 style="font-size: 26px; margin-top: 30px; color: #333;">Position List</h2>
-    <table id="positionListTable">
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th style="text-align: right;">Price</th>
-            <th>Category</th>
-            <th>Chef</th>
-        </tr>
-        {% for item in position_list %}
-        <tr>
-            <td>{{ item.position_name }}</td>
-            <td>{{ item.description }}</td>
-            <td style="text-align: right;">${{ item.price }}</td>
-            <td>{{ item.category.position_name }}</td>
-            <td style="display: {% if not item.chef %} none {% else %} table-cell {% endif %};">
-                {{ item.chef }}
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" style="text-align: center; font-style: italic;">No position list available</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-
-<script>
-    document.querySelectorAll('.filter').forEach(filter => {
-        filter.addEventListener('change', () => {
-            document.forms[0].submit();
-        });
-    });
-
-    function filterTable() {
-        let input = document.querySelector('.search-bar').value.toLowerCase();
-        let rows = document.querySelectorAll('#positionListTable tr:not(:first-child)');
-        rows.forEach(row => {
-            let text = row.innerText.toLowerCase();
-            row.style.display = text.includes(input) ? '' : 'none';
-        });
-    }
-</script>
+            <div class="map-container mb-4">
+                <h3>Our Location</h3>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12892.665078673927!2d35.035438500000006!3d48.464717299999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dbe2bc7b682433%3A0x4e21e5b4d4aa2a94!2z0J_QvtC70YzQvdCw0Y8g0KHRg9C80LDRgtC40Y8g0J_QsNC70L7Qv9C40Lkg0J_QvtC70YzQvdCw0Y8g0KHRg9C80LDRgtC40Y8g0L_QtdC00YLRg9C90YvQtSDQv9C-0LLQsNC90LA!5e0!3m2!1sru!2sua!4v1613561070417!5m2!1sru!2sua"
+                    width="100%"
+                    height="300"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
 {% endblock %}
