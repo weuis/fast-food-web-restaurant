@@ -39,7 +39,16 @@ class Chef(AbstractUser):
 
 
 class AboutUs(models.Model):
-    description = models.TextField(blank=False)
+    name = models.CharField(max_length=255, default="Mono Food")
+    description = models.TextField()
+    history = models.TextField(blank=True, null=True)
+    opening_hours = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Feedback(models.Model):
