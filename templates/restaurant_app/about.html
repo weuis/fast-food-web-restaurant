@@ -1,12 +1,32 @@
-ф{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block title %}About Us - Restaurant{% endblock %}
+{% block title %}About Us - {{ restaurant.name }}{% endblock %}
 
 {% block content %}
-    <h1>About Our Restaurant</h1>
-    {% for item in data %}
-        <p>{{ item.description }}</p>
-    {% empty %}
-        <p>No information available.</p>
-    {% endfor %}
+<div class="container">
+    <h1>About {{ restaurant.name }}</h1>
+
+    <p>{{ restaurant.description }}</p>
+
+    {% if restaurant.history %}
+        <h2>Our Story</h2>
+        <p>{{ restaurant.history }}</p>
+    {% endif %}
+
+    <h2>Contact Information</h2>
+    <p><strong>Address:</strong> {{ restaurant_app.address }}</p>
+    <p><strong>Phone:</strong> {{ restaurant.phone }}</p>
+    <p><strong>Email:</strong> <a href="mailto:{{ restaurant.email }}">{{ restaurant.email }}</a></p>
+
+    <h2>Opening Hours</h2>
+    <p>{{ restaurant.opening_hours }}</p>
+</div>
+
+<style>
+    .container {
+        text-align: center;
+        max-width: 800px;
+        margin: auto;
+    }
+</style>
 {% endblock %}

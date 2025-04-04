@@ -7,8 +7,8 @@ from django import forms
 
 
 def about_view(request: HttpRequest) -> HttpResponse:
-    data = AboutUs.objects.all()
-    context = {"data": data}
+    restaurant = AboutUs.objects.first()
+    context = {"restaurant": restaurant}
     return render(request, "restaurant_app/about.html", context=context)
 
 

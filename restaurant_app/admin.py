@@ -24,9 +24,15 @@ class ChefAdmin(admin.ModelAdmin):
 
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "description",
+    list_display = ("name", "phone", "email", "opening_hours", "address")
+    search_fields = ("name", "address", "phone", "email", "history", "description")
+    list_filter = ("opening_hours",)
+    ordering = ("name",)
+    readonly_fields = ("name",)
+    fieldsets = (
+        ("General Info", {"fields": ("name", "description", "history")}),
+        ("Contact Details", {"fields": ("address", "phone", "email")}),
+        ("Working Hours", {"fields": ("opening_hours",)}),
     )
 
 
