@@ -51,20 +51,5 @@
     </div>
 </div>
 
-<script>
-    document.getElementById('search-input').addEventListener('input', function() {
-        let searchValue = this.value.toLowerCase();
-        let menuItems = document.querySelectorAll('.menu-item');
-
-        menuItems.forEach(function(item) {
-            let itemName = item.getAttribute('data-name');
-
-            if (itemName.includes(searchValue)) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-</script>
+<script src="{% static 'js/menu.js' %}"></script>
 {% endblock %}
