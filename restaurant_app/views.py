@@ -96,7 +96,7 @@ class HomeView(ListView):
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ["user_name", "description", "rating"]
+        fields = ["user_name", "feedback", "rating"]
 
     def clean_rating(self):
         rating = self.cleaned_data.get("rating")

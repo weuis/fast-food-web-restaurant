@@ -53,7 +53,7 @@ class AboutUs(models.Model):
 
 class Feedback(models.Model):
     user_name = models.CharField(max_length=15)
-    description = models.TextField(blank=False)
+    feedback = models.TextField(blank=False)
     rating = models.IntegerField()
 
     def __str__(self):
