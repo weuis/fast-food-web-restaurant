@@ -10,3 +10,4 @@ pathspec==0.12.1
 pillow==11.1.0
 platformdirs==4.3.7
 sqlparse==0.5.3
+whitenoise==6.9.0
