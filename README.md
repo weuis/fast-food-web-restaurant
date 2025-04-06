@@ -8,6 +8,7 @@ while admins can manage restaurant data through a custom admin interface.
 ![Data Base Schema](docs/restaurant_app.drawio.png)
 
 ## Pages
+
 ![Home page](docs/home_page.png)
 
 ![Menu page](docs/menu_page.png)
