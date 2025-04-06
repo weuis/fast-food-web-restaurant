@@ -7,8 +7,16 @@ while admins can manage restaurant data through a custom admin interface.
 ## DATA BASE SCHEMA
 ![Data Base Schema](docs/restaurant_app.drawio.png)
 
-## Check it out!
+## Pages
+![Home page](docs/home_page.png)
 
+![Menu page](docs/menu_page.png)
+
+![About Us page](docs/aboutus_page.png)
+
+![Book Table page](docs/book_table_page.png)
+
+![Feedback page](docs/feedback_page.png)
 
 ## Features
 
