@@ -4,6 +4,8 @@ A Django-powered web application for a fast food restaurant.
 Users can view the menu, book tables, and leave feedback, 
 while admins can manage restaurant data through a custom admin interface.
 
+## DATA BASE SCHEMA
+![Data Base Schema](docs/restaurant_app.drawio.png)
 
 ## Check it out!
 

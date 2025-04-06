@@ -29,7 +29,7 @@
     {% for feedback in feedback_list %}
         <div class="feedback-box" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
             <p><strong>{{ feedback.user_name }}</strong> (Rating: {{ feedback.rating }}/5)</p>
-            <p>{{ feedback.description }}</p>
+            <p>{{ feedback.feedback }}</p>
         </div>
     {% empty %}
         <p style="text-align: center; font-size: 16px;">No feedback yet. Be the first to share your thoughts!</p>
