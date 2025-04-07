@@ -353,6 +353,7 @@ pyrightconfig.json
 
  .DS_Store
 __pycache__
+db.sqlite
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,pycharm+all
