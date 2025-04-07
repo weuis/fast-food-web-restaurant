@@ -352,6 +352,7 @@ poetry.toml
 pyrightconfig.json
 
  .DS_Store
+__pycache__
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,pycharm+all
