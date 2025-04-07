@@ -3,10 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# SQLite database file
+# SQLite database files
 db.sqlite3
 *.sqlite
 *.sqlite3
+db.sqlite3-journal
 
 # macOS system files
 .DS_Store
@@ -23,16 +24,16 @@ ENV/
 .venv/
 .ENV/
 
-# VS Code settings
-.vscode/
-
 # PyCharm settings
 .idea/
+
+# VS Code settings
+.vscode/
 
 # Logs
 *.log
 
-# Migrations (optional if you regenerate them per-env)
+# Migrations (compiled or cache)
 **/migrations/*.pyc
 **/migrations/__pycache__/
 
@@ -40,23 +41,35 @@ ENV/
 htmlcov/
 .coverage
 .tox/
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
+.nox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-
-# Compiled files
-*.egg
-*.egg-info/
-dist/
-build/
-
-# Local config
-.env
-.env.*
-
-# pip cache
+# Pip wheel cache
 pip-wheel-metadata/
 *.whl
 
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Spyder IDE
+.spyderproject
+.spyproject
+
+# Poetry
+poetry.toml
+poetry.lock
+
+# LSP
+pyrightconfig.json
+
+# Local env configs
+.env
+.env.*
+
+# Build
+build/
+dist/
+*.egg-info/
+*.egg
