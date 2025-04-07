@@ -1,68 +1,51 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, TemplateView, FormView, CreateView
 from django.urls import reverse_lazy
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
 from .models import Position, PositionList, AboutUs, BookTable, Feedback
 from django import forms
 
 
-def about_view(request: HttpRequest) -> HttpResponse:
-    restaurant = AboutUs.objects.first()
-    context = {"restaurant": restaurant}
-    return render(request, "restaurant_app/about.html", context=context)
+class AboutView(TemplateView):
+    template_name = "restaurant_app/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["restaurant"] = AboutUs.objects.first()
+        return context
 
 
-def menu_view(request: HttpRequest) -> HttpResponse:
-    positions = Position.objects.all()
-    menu_items = PositionList.objects.all()
+class MenuView(TemplateView):
+    template_name = "restaurant_app/menu.html"
 
-    context = {
-        "positions": positions,
-        "menu_items": menu_items,
-    }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "positions": Position.objects.all(),
+            "menu_items": PositionList.objects.all(),
+        })
+        return context
 
-    return render(request, "restaurant_app/menu.html", context=context)
+
+class BookTableForm(forms.ModelForm):
+    class Meta:
+        model = BookTable
+        fields = ["name", "phone_number", "email", "total_person", "booking_date"]
 
 
-def book_table_view(request: HttpRequest) -> HttpResponse:
-    context = {}
+class BookTableView(FormView):
+    template_name = "restaurant_app/book_table.html"
+    form_class = BookTableForm
+    success_url = reverse_lazy("restaurant_app:book_table")
 
-    if request.method == "POST":
-        name = request.POST.get("user_name", "").strip()
-        phone_number = request.POST.get("phone_number", "").strip()
-        if phone_number.isdigit():
-            phone_number = int(phone_number)
-        email = request.POST.get("user_email", "").strip()
-        total_person = request.POST.get("total_person", "").strip()
-        booking_data = request.POST.get("booking_data", "").strip()
-        try:
-            total_person = int(total_person)
-        except ValueError:
-            total_person = 0
+    def form_valid(self, form):
+        form.save()
+        context = self.get_context_data(form=form)
+        context["message"] = "Booking successful!"
+        return self.render_to_response(context)
 
-        if total_person > 0 and booking_data:
-            data = BookTable(
-                name=name,
-                phone_number=phone_number,
-                email=email,
-                total_person=total_person,
-                booking_date=booking_data,
-            )
-            data.save()
-            context["message"] = "Booking successful!"
-        else:
-            context["error"] = "Invalid input. Please check your details."
-        context.update(
-            {
-                "user_name": name,
-                "phone_number": phone_number,
-                "user_email": email,
-                "total_person": total_person,
-                "booking_data": booking_data,
-            }
-        )
-
-    return render(request, "restaurant_app/book_table.html", context=context)
+    def form_invalid(self, form):
+        context = self.get_context_data(form=form)
+        context["error"] = "Invalid input. Please check your details."
+        return self.render_to_response(context)
 
 
 class HomeView(ListView):
@@ -82,14 +65,12 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                "positions": Position.objects.all().order_by("position_name"),
-                "reviews": Feedback.objects.all().order_by("-id")[:5],
-                "selected_category": self.request.GET.get("category_id"),
-                "selected_sort": self.request.GET.get("sort", "asc"),
-            }
-        )
+        context.update({
+            "positions": Position.objects.all().order_by("position_name"),
+            "reviews": Feedback.objects.all().order_by("-id")[:5],
+            "selected_category": self.request.GET.get("category_id"),
+            "selected_sort": self.request.GET.get("sort", "asc"),
+        })
         return context
 
 
@@ -114,4 +95,3 @@ class FeedbackView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["feedback_list"] = Feedback.objects.all().order_by("-id")
-        return context
