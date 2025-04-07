@@ -1,5 +1,9 @@
 from django.views.generic import ListView, TemplateView, FormView, CreateView
 from django.urls import reverse_lazy
+<<<<<<< HEAD
+=======
+from .models import Position, PositionList, AboutUs, BookTable, Feedback
+>>>>>>> develop
 from django import forms
 from .models import Position, PositionList, AboutUs, BookTable, Feedback
 
@@ -95,4 +99,3 @@ class FeedbackView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["feedback_list"] = Feedback.objects.all().order_by("-id")
-        return context
