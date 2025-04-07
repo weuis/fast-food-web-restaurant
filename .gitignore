@@ -1,2 +1,61 @@
-.idea
-venv
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database file
+db.sqlite3
+*.sqlite
+*.sqlite3
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Logs
+*.log
+
+# Migrations (optional if you regenerate them per-env)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Coverage & testing
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+
+# Compiled files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Local config
+.env
+.env.*
+
+# pip cache
+pip-wheel-metadata/
+*.whl
