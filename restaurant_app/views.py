@@ -1,9 +1,5 @@
 from django.views.generic import ListView, TemplateView, FormView, CreateView
 from django.urls import reverse_lazy
-<<<<<<< HEAD
-=======
-from .models import Position, PositionList, AboutUs, BookTable, Feedback
->>>>>>> develop
 from django import forms
 from .models import Position, PositionList, AboutUs, BookTable, Feedback
 
